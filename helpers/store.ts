@@ -11,7 +11,7 @@ const useStore = create(() => {
     playerCameraRotation: [-6, 1, 3],
     joystickDistance: 0,
     joystickAngle: 90,
-    uiStep: 0,
+    uiStep: 2,
     popup: 0,
     createAvatarItem: -1,
     emojiAnimation: 'Idle',

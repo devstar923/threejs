@@ -29,6 +29,7 @@ import PopupUI4 from "./components/PopupUI4";
 import { useRouter } from "next/router";
 import PopupUI5 from "./components/PopupUI5";
 import Link from "next/link";
+import Inovasi from "../webgl/Inovasi";
 
 function loadStorage() {
   if (localStorage.getItem("hairStyle") !== null) {
@@ -62,7 +63,7 @@ function loadStorage() {
       accessoriesColor: accessoriesColor,
       shoesStyle: shoesStyle,
       shoesColor: shoesColor,
-      uiStep: 3,
+      uiStep: 4,
     });
   } else if (localStorage.getItem("avatarName") !== null) {
     const name = String(localStorage.getItem("avatarName"));
@@ -106,8 +107,8 @@ const Loading = (props: any) => {
 const Home: NextPage = () => {
   const router = useRouter();
   const date = new Date();
-  const mode =
-    router.query["mode"] +
+  const param =
+    `mode=${router.query["mode"]}&uid=${router.query["uid"]}&name=${router.query["name"]}` +
     `?${date.getFullYear()}${
       date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth()
     }${date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}${
@@ -205,8 +206,15 @@ const Home: NextPage = () => {
 
       <div id="canvas-container" className="w-screen h-screen">
         <Canvas>
-          <Environment near={1} far={1000} resolution={256} preset="night" />
+          {/* <Environment near={1} far={1000} resolution={256} preset="night" /> */}
           <ambientLight intensity={0.3} color={"#ffddcc"} />
+          <pointLight intensity={0.5} color={"#ffddcc"} />
+          <pointLight
+            intensity={0.5}
+            color={"#ffddcc"}
+            position={[-9.8, -2, -8.0]}
+          />
+
           <Suspense fallback={null}>
             <Physics gravity={[0, -65, 0]}>
               <Room visible={uiStep === 4 ? true : false} />
@@ -219,8 +227,8 @@ const Home: NextPage = () => {
               />
               <AniCat
                 position={[-4.7, -1.7, -22.0]}
-                rotation={[0, 2.5, 0]}
-                scale={[3, 3, 3]}
+                rotation={[0, 0, 0]}
+                scale={[1.2, 1.2, 1.2]}
                 visible={uiStep === 4 ? true : false}
               />
               <VideoBoard visible={uiStep === 4 ? true : false} />
@@ -238,6 +246,20 @@ const Home: NextPage = () => {
                 scale={[1, 1, 1]}
                 visible={uiStep === 2 || uiStep === 4 ? true : false}
                 avatarSetting={uiStep === 2 ? true : false}
+              />
+
+              <Phone
+                position={[-1.7, -0.7, -22.0]}
+                rotation={[0, 2.5, 0]}
+                scale={[15, 15, 15]}
+                visible={uiStep === 4 ? true : false}
+              />
+
+              <Inovasi
+                position={[-6.2, -1.5, -8.0]}
+                rotation={[5, -2.5, 0]}
+                scale={[15, 15, 15]}
+                visible={uiStep === 4 ? true : false}
               />
             </Physics>
             <SkyBox visible={uiStep === 4 ? true : false} />
@@ -260,11 +282,11 @@ const Home: NextPage = () => {
       </div>
       <VideoDetail />
 
-      <PopupUI1 mode={String(mode)} />
-      <PopupUI2 mode={String(mode)} />
-      <PopupUI3 mode={String(mode)} />
-      <PopupUI4 mode={String(mode)} />
-      <PopupUI5 mode={String(mode)} />
+      <PopupUI1 mode={String(param)} />
+      <PopupUI2 mode={String(param)} />
+      <PopupUI3 mode={String(param)} />
+      <PopupUI4 mode={String(param)} />
+      <PopupUI5 mode={String(param)} />
       <Loading />
     </main>
   );
