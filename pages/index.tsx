@@ -81,7 +81,7 @@ const Loading = (props: any) => {
     setPercent((percent) => (percent + delta > 100 ? 100 : percent + delta));
   };
   useEffect(() => {
-    intervalId = setInterval(increasePercent, 300);
+    intervalId = setInterval(increasePercent, 100);
   }, []);
 
   useEffect(() => {
@@ -118,7 +118,8 @@ const Home: NextPage = () => {
     }`;
 
   useEffect(() => {
-    loadStorage();
+    // loadStorage();
+    useStore.setState({ startWorld: true, uiStep: 4 });
   }, []);
 
   useEffect(() => {
